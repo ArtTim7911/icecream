@@ -97,6 +97,34 @@ header {
 
 .remove-item:hover { color: darkred; }
 
+#hero-section {
+    background: linear-gradient(135deg, #ffd6e7 0%, #fff5f7 100%);
+    padding: 40px 20px;
+    text-align: center;
+    margin: 20px auto;
+    border-radius: 8px;
+    max-width: 1000px;
+}
+
+#hero-section h2 {
+    font-size: 2em;
+    color: #d2691e;
+    margin: 0 0 15px 0;
+}
+
+#hero-section p {
+    font-size: 1.1em;
+    color: #555;
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+#hero-section .highlight {
+    font-weight: bold;
+    color: #ff6b9d;
+    font-size: 1.15em;
+}
+
 #cart {
     font-size: 1.2em;
     cursor: pointer;
