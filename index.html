@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Про морозиво</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <img src="./logo.jpg" alt="Логотип" id="logo">
+        <h1>Ласкаво просимо у світ морозива!</h1>
+        <div id="cart">
+            <span>🛒</span> <span id="cart-count">0</span>
+        </div>
+    </header>
+    <div id="cart-panel">
+        <h3>Кошик</h3>
+        <ul id="cart-items"></ul>
+        <button id="checkout-button">Оформити замовлення</button>
+    </div>
+
+    <section id="icecream-section">
+        <h2>Історія та задоволення</h2>
+        <p>Морозиво — холодний десерт, що робить наше літо солодким. Тут можна розказати коротко про походження, різні смаки та чому його всі так люблять.</p>
+        <img src="./головне зображення.webp" alt="Смачне морозиво">
+    </section>
+
+    <section id="products-section">
+        <h2>Наші смаки</h2>
+        <div class="product-list">
+            <div class="product-card">
+                <img src="./midn.jfif" alt="Midnight Chocolate">
+                <h3>Midnight Chocolate</h3>
+                <p>Глибокий темний шоколад з нотками карамелі і відчуттям розплавленої лави, що тане в роті.</p>
+                <p class="price">$4.99</p>
+                <button class="add-to-cart">В кошик</button>
+            </div>
+            <div class="product-card">
+                <img src="./berry.jfif" alt="Berry Blast">
+                <h3>Berry Blast</h3>
+                <p>Ягідний вибух: полуниця, малина та ожина зустрічаються у свіжому вершковому кремі. Кислинка і солодість у кожному ковтку.</p>
+                <p class="price">$5.49</p>
+                <button class="add-to-cart">В кошик</button>
+            </div>
+            <div class="product-card">
+                <img src="./tropical.jfif" alt="Tropical Twist">
+                <h3>Tropical Twist</h3>
+                <p>Екзотика у кульці: манго, ананас та кокос створюють пляжний настрій у будь-який день.</p>
+                <p class="price">$5.99</p>
+                <button class="add-to-cart">В кошик</button>
+            </div>
+            <div class="product-card">
+                <img src="./vanila.webp" alt="Vanilla Dream">
+                <h3>Vanilla Dream</h3>
+                <p>Класика, яку неможливо забути – справжня ваніль з мадагаскарської стручкової бобів, м’яка й ніжна.</p>
+                <p class="price">$4.49</p>
+                <button class="add-to-cart">В кошик</button>
+            </div>
+            <div class="product-card">
+                <img src="./mint.jfif" alt="Minty Magic">
+                <h3>Minty Magic</h3>
+                <p>Освіжаюча м’ята з шматочками шоколаду – як морозний подих у літній день. Справжня магія смаку.</p>
+                <p class="price">$5.25</p>
+                <button class="add-to-cart">В кошик</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="process-section">
+        <h2>Як замовити</h2>
+        <div class="step-list">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3>Виберіть смаку</h3>
+                <p>Просто переглянь нашу колекцію і обери свій улюблений.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3>Оформіть замовлення в кошику</h3>
+                <p>Додай до корзини, вкажи адресу і все – готово до оплати!</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3>Отримуйте радість</h3>
+                <p>Чекай доставку й насолоджуйся своїм морозивом.</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cart = [];
+            const countEl = document.getElementById('cart-count');
+            const cartPanel = document.getElementById('cart-panel');
+            const cartItems = document.getElementById('cart-items');
+
+            function renderCart() {
+                cartItems.innerHTML = '';
+                cart.forEach((item, index) => {
+                    const li = document.createElement('li');
+                    if (item.img) {
+                        const img = document.createElement('img');
+                        img.src = item.img;
+                        img.alt = item.name;
+                        img.className = 'cart-thumb';
+                        li.appendChild(img);
+                    }
+                    const span = document.createElement('span');
+                    span.textContent = item.name;
+                    li.appendChild(span);
+                    const removeBtn = document.createElement('button');
+                    removeBtn.textContent = '×';
+                    removeBtn.className = 'remove-item';
+                    removeBtn.addEventListener('click', () => {
+                        cart.splice(index, 1);
+                        countEl.innerText = cart.length;
+                        renderCart();
+                    });
+                    li.appendChild(removeBtn);
+                    cartItems.appendChild(li);
+                });
+            }
+
+            document.querySelectorAll('.add-to-cart').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const card = btn.closest('.product-card');
+                    const name = card.querySelector('h3').innerText;
+                    const imgSrc = card.querySelector('img').src;
+                    cart.push({ name, img: imgSrc });
+                    countEl.innerText = cart.length;
+                    renderCart();
+                    alert(`${name} додано до кошика!`);
+                });
+            });
+
+            document.getElementById('cart').addEventListener('click', () => {
+                cartPanel.classList.toggle('visible');
+            });
+
+            document.getElementById('checkout-button').addEventListener('click', () => {
+                if (cart.length === 0) {
+                    alert('Кошик порожній!');
+                } else {
+                    alert('Дякуємо за замовлення! Ми з вами звʼяжемось.');
+                    cart.length = 0;
+                    countEl.innerText = cart.length;
+                    renderCart();
+                    cartPanel.classList.remove('visible');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
